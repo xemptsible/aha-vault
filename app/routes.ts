@@ -1,3 +1,11 @@
-import { type RouteConfig, index } from "@react-router/dev/routes";
+import { type RouteConfig, index, route } from '@react-router/dev/routes'
 
-export default [index("routes/home.tsx")] satisfies RouteConfig;
+export default [
+  index('routes/home.tsx'),
+  route('banner', 'routes/banner.tsx'),
+  route('resources', 'routes/resources.tsx'),
+  route('raid-score-calc', 'routes/raid-score-calc.tsx'),
+
+  // https://github.com/abereghici/remix-themes/tree/main#add-the-action-route
+  route('action/set-theme', 'routes/action/set-theme.tsx'),
+] satisfies RouteConfig
