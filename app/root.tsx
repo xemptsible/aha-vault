@@ -14,7 +14,6 @@ import './app.css'
 
 import { cn } from './lib/utils'
 import { themeSessionResolver } from './sessions.server'
-import Header from './components/header'
 
 export const links: Route.LinksFunction = () => []
 
@@ -70,10 +69,7 @@ function ProviderWrappedApp({ children }: { children: React.ReactNode }) {
 export default function App() {
   return (
     <>
-      <Header />
-      <main className='container mx-auto flex-1'>
-        <Outlet />
-      </main>
+      <Outlet />
       <footer className='bg-card border-t px-3 py-1'>
         <span className='text-sm'>{'[FRIEND CODE] - NA'}</span>
       </footer>
