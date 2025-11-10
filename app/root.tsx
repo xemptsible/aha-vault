@@ -1,3 +1,4 @@
+import { NuqsAdapter } from 'nuqs/adapters/react-router/v7'
 import {
   isRouteErrorResponse,
   Links,
@@ -11,7 +12,6 @@ import {
 import { PreventFlashOnWrongTheme, ThemeProvider, useTheme } from 'remix-themes'
 import type { Route } from './+types/root'
 import './app.css'
-
 import { cn } from './lib/utils'
 import { themeSessionResolver } from './sessions.server'
 
@@ -19,6 +19,7 @@ export const links: Route.LinksFunction = () => []
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const { getTheme } = await themeSessionResolver(request)
+
   return {
     theme: getTheme(),
   }
@@ -29,22 +30,24 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <ThemeProvider
-      specifiedTheme={data.theme}
+      specifiedTheme={data?.theme ?? null}
       themeAction='/action/set-theme'
     >
-      <ProviderWrappedApp>{children}</ProviderWrappedApp>
+      <NuqsAdapter>
+        <ProviderLayout>{children}</ProviderLayout>
+      </NuqsAdapter>
     </ThemeProvider>
   )
 }
 
-function ProviderWrappedApp({ children }: { children: React.ReactNode }) {
+function ProviderLayout({ children }: { children: React.ReactNode }) {
   const data = useLoaderData<typeof loader>()
   const [theme] = useTheme()
 
   return (
     <html
       lang='en'
-      className={cn(theme)}
+      className={cn(theme ?? '')}
     >
       <head>
         <meta charSet='utf-8' />
@@ -52,10 +55,9 @@ function ProviderWrappedApp({ children }: { children: React.ReactNode }) {
           name='viewport'
           content='width=device-width, initial-scale=1'
         />
-
         <Meta />
-        <PreventFlashOnWrongTheme ssrTheme={Boolean(data.theme)} />
         <Links />
+        <PreventFlashOnWrongTheme ssrTheme={Boolean(data?.theme)} />
       </head>
       <body className='flex flex-col'>
         {children}
@@ -71,7 +73,7 @@ export default function App() {
     <>
       <Outlet />
       <footer className='bg-card border-t px-3 py-1'>
-        <span className='text-sm'>{'[FRIEND CODE] - NA'}</span>
+        <span className='text-sm'>{'AYWKRCVB - NA'}</span>
       </footer>
     </>
   )
@@ -94,14 +96,23 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   }
 
   return (
-    <main className='container mx-auto p-4 pt-16'>
-      <h1>{message}</h1>
-      <p>{details}</p>
-      {stack && (
-        <pre className='w-full overflow-x-auto p-4'>
-          <code>{stack}</code>
-        </pre>
-      )}
-    </main>
+    <>
+      <title>404 Not Found</title>
+      <main className='container mx-auto p-4 pt-16'>
+        <h1 className='text-3xl'>{message}</h1>
+        <p>{details}</p>
+        {stack && (
+          <pre className='w-full overflow-x-auto p-4'>
+            <code>{stack}</code>
+          </pre>
+        )}
+        <a
+          href='/'
+          className='hover:text-secondary underline underline-offset-2'
+        >
+          Go home
+        </a>
+      </main>
+    </>
   )
 }

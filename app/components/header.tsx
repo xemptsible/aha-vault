@@ -6,8 +6,6 @@ import { Button } from './ui/button'
 export default function Header() {
   const { pathname } = useLocation()
 
-  console.log(pathname)
-
   return (
     <header className='dark:bg-card container mx-auto flex items-center justify-between space-x-2 rounded-b-xl border-r border-b border-l px-3 py-2 shadow-sm'>
       <div className='flex w-full items-center justify-end md:justify-between'>

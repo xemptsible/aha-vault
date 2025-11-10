@@ -22,6 +22,7 @@ const buttonVariants = cva(
         link: 'text-black underline-offset-4 hover:underline',
         'ba-main': `${BA_STYLE.default} bg-primary transition active:scale-[0.95] text-primary-foreground`,
         'ba-ghost': `${BA_STYLE.default} hover:bg-accent transition active:scale-[0.95] dark:hover:text-accent-foreground`,
+        'ba-glow': `text-foreground/70 hover:text-foreground data-[state=open]:text-foreground`,
       },
       size: {
         default: 'h-9 px-4 py-2 has-[>svg]:px-3',

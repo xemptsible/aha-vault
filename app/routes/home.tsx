@@ -5,6 +5,11 @@ import { Button } from '~/components/ui/button'
 export default function Home() {
   return (
     <>
+      <title>Atra-Hasis Vault</title>
+      <meta
+        name='description'
+        content='The Ark that will archive all mysteries'
+      />
       <header className='container mx-auto flex items-center justify-between p-4'>
         <div className='invisible'></div>
         <h1 className='text-4xl font-semibold'>

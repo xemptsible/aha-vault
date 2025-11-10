@@ -5,7 +5,7 @@ export default function HeaderLayout() {
   return (
     <>
       <Header />
-      <main className='container mx-auto flex-1'>
+      <main className='container mx-auto flex flex-1 flex-col px-4 py-8 lg:px-0'>
         <Outlet />
       </main>
     </>
