@@ -194,3 +194,25 @@
     @apply h-svh;
   }
 }
+
+.tooltip::before,
+.tooltip::after {
+  opacity: 0;
+}
+
+.tooltip:hover::before {
+  opacity: 1;
+
+  @apply transition;
+}
+
+.tooltip::before,
+.tooltip::after {
+  position: absolute;
+  inset-block-start: -85%;
+}
+.tooltip::before {
+  content: attr(data-tooltip);
+
+  @apply rounded-md bg-black p-0.5 text-nowrap text-white outline;
+}

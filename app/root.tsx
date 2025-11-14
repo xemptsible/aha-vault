@@ -69,8 +69,12 @@ export default function App() {
   return (
     <>
       <Outlet />
-      <footer className='bg-card border-t px-3 py-1'>
+      <footer className='bg-card flex justify-between border-t px-3 py-1'>
         <span className='text-sm'>{'AYWKRCVB - NA'}</span>
+        <span className='text-sm text-gray-400'>
+          No affiliation nor endorsement from NEXON Games Co., Ltd. or Yostar,
+          Inc.
+        </span>
       </footer>
     </>
   )

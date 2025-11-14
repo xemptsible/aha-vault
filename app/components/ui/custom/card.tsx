@@ -7,7 +7,7 @@ import { ExternalLink } from 'lucide-react'
 
 export default function ResourceCard({ resource }: { resource: Resource }) {
   return (
-    <Card>
+    <Card className='h-min'>
       <CardHeader>
         <CardTitle>
           <Link
