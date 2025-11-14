@@ -17,7 +17,7 @@ export default function Home() {
         </h1>
         <ThemeToggle />
       </header>
-      <main className='container mx-auto flex flex-1 items-center justify-center gap-4'>
+      <main className='container mx-auto flex flex-1 items-center justify-center gap-4 flex-wrap'>
         <Button
           variant={'ghost'}
           className={`h-fit flex-col`}
@@ -26,8 +26,8 @@ export default function Home() {
           <Link to={'/resources'}>
             <img
               src='/resources.webp'
-              height={150}
-              width={150}
+              height={125}
+              width={125}
             />
             <span className='text-lg font-semibold'>Resources</span>
           </Link>
@@ -40,8 +40,8 @@ export default function Home() {
           <Link to={'/banner'}>
             <img
               src='/banner.webp'
-              height={150}
-              width={150}
+              height={125}
+              width={125}
             />
             <span className='text-lg font-semibold'>Banner</span>
           </Link>
@@ -54,8 +54,8 @@ export default function Home() {
           <Link to={'/raid-score-calc'}>
             <img
               src='/calc.webp'
-              height={150}
-              width={150}
+              height={125}
+              width={125}
             />
             <span className='text-lg font-semibold'>Raid Score Calculator</span>
           </Link>
