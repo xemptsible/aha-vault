@@ -8,16 +8,16 @@ export default function Header() {
 
   return (
     <header className='dark:bg-card container mx-auto flex items-center justify-between space-x-2 rounded-b-xl border-r border-b border-l px-3 py-2 shadow-sm'>
-      <div className='flex w-full items-center justify-end md:justify-between'>
-        <nav className='hidden items-center gap-3 md:flex'>
+      <div className='flex w-full items-center justify-between'>
+        <nav className='flex flex-wrap items-center gap-3'>
           <Button
             variant={'ba-ghost'}
-            asChild
             className={'bg-input/60 dark:bg-input/30'}
+            asChild
           >
             <Link to={'/'}>
               <Home />
-              <span>Home</span>
+              <span className='hidden md:inline'>Home</span>
             </Link>
           </Button>
           <Button
@@ -26,7 +26,7 @@ export default function Header() {
           >
             <Link to={'/resources'}>
               <BookMarked />
-              <span>Resources</span>
+              <span className='hidden md:inline'>Resources</span>
             </Link>
           </Button>
           <Button
@@ -35,7 +35,7 @@ export default function Header() {
           >
             <Link to={'/banner'}>
               <CalendarSync />
-              <span>Banner</span>
+              <span className='hidden md:inline'>Banner</span>
             </Link>
           </Button>
           <Button
@@ -46,7 +46,7 @@ export default function Header() {
           >
             <Link to={'/raid-score-calc'}>
               <Calculator />
-              <span>Raid Score Calculator</span>
+              <span className='hidden md:inline'>Raid Score Calculator</span>
             </Link>
           </Button>
         </nav>

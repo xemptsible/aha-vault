@@ -21,7 +21,7 @@ const buttonVariants = cva(
           'hover:bg-secondary hover:text-secondary-foreground dark:hover:bg-secondary',
         link: 'text-black underline-offset-4 hover:underline',
         'ba-main': `${BA_STYLE.default} bg-primary transition active:scale-[0.95] text-primary-foreground`,
-        'ba-ghost': `${BA_STYLE.default} hover:bg-accent transition active:scale-[0.95] dark:hover:text-accent-foreground`,
+        'ba-ghost': `${BA_STYLE.default} hover:bg-accent transition active:scale-[0.95] dark:hover:bg-accent dark:hover:text-accent-foreground`,
         'ba-glow': `text-foreground/70 hover:text-foreground data-[state=open]:text-foreground`,
       },
       size: {
