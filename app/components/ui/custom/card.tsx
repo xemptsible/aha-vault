@@ -1,27 +1,59 @@
-import { Separator } from '../separator'
+import { Link } from 'react-router'
+import type { Resource } from '~/types/resource'
 import { Badge } from '../badge'
 import { Card, CardContent, CardHeader, CardTitle } from '../card'
+import { Separator } from '../separator'
+import { ExternalLink } from 'lucide-react'
 
-export default function ResourceCard() {
+export default function ResourceCard({ resource }: { resource: Resource }) {
   return (
     <Card>
       <CardHeader>
         <CardTitle>
-          {
-            '\u914d\u7f6e\u5b66\u306e\u3059\u3059\u3081\uff08\u30b7\u30fc\u30ba\u30f37\uff09'
-          }
+          <Link
+            className='underline underline-offset-2'
+            to={resource.url}
+          >
+            {resource.title}
+          </Link>
         </CardTitle>
         <div
           data-slot='card-name'
           className='flex flex-wrap items-center gap-2'
         >
-          <Badge variant={'ba-default'}>
-            <span>Midokuni</span>
-          </Badge>
+          {resource.authors.length > 0 ? (
+            resource.authors.map((author) => {
+              return author.personal_site.length > 0 ? (
+                <Link
+                  to={author.personal_site}
+                  key={author.id}
+                >
+                  <Badge variant={'ba-default'}>
+                    <span>{author.name}</span>
+                    <ExternalLink />
+                  </Badge>
+                </Link>
+              ) : (
+                <Badge
+                  variant={'ba-default'}
+                  key={author.id}
+                >
+                  <span>{author.name}</span>
+                </Badge>
+              )
+            })
+          ) : (
+            <Badge variant={'ba-default'}>
+              <span>Unknown</span>
+            </Badge>
+          )}
         </div>
         <img
-          src='/placeholder-arona.png'
-          alt='Placeholder image with Arona, the AI assistant from Blue Archive in small/chibi form'
+          src={resource.image?.url ?? '/placeholder-arona.webp'}
+          alt={
+            resource.image?.alt_image ??
+            'Placeholder image with Arona, the AI assistant from Blue Archive in a small form'
+          }
           height={'250'}
           width={'250'}
           className='mx-auto'
@@ -31,11 +63,23 @@ export default function ResourceCard() {
           data-slot='card-tag'
           className='flex flex-wrap items-center gap-2'
         >
-          <Badge>JP</Badge>
+          {resource.tags && resource.tags?.length > 0 ? (
+            resource.tags.map((tag) => {
+              return <Badge key={tag.id}>{tag.name}</Badge>
+            })
+          ) : (
+            <span className='text-muted-foreground text-xs'>
+              No tag(s) provided
+            </span>
+          )}
         </div>
       </CardHeader>
       <CardContent>
-        <p>Exhaustive beginner guide.</p>
+        {resource.description && resource.description.length > 0 ? (
+          <p>{resource.description}</p>
+        ) : (
+          <p>No description provided.</p>
+        )}
       </CardContent>
     </Card>
   )

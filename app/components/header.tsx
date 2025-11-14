@@ -11,9 +11,9 @@ export default function Header() {
       <div className='flex w-full items-center justify-end md:justify-between'>
         <nav className='hidden items-center gap-3 md:flex'>
           <Button
-            variant={pathname.endsWith('/') ? 'ba-main' : 'ba-ghost'}
+            variant={'ba-ghost'}
             asChild
-            className={!pathname.endsWith('/') ? 'bg-input/30' : ''}
+            className={'bg-input/60 dark:bg-input/30'}
           >
             <Link to={'/'}>
               <Home />

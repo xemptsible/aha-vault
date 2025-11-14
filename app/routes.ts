@@ -9,7 +9,7 @@ export default [
   index('routes/home.tsx'),
   layout('routes/navigation/layout.tsx', [
     route('banner', 'routes/banner.tsx'),
-    route('resources', 'routes/resources.tsx'),
+    route('resources', 'routes/resource.tsx'),
     route('raid-score-calc', 'routes/raid-score-calc.tsx'),
   ]),
 

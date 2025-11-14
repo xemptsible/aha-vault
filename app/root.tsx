@@ -1,4 +1,3 @@
-import { NuqsAdapter } from 'nuqs/adapters/react-router/v7'
 import {
   isRouteErrorResponse,
   Links,
@@ -33,9 +32,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       specifiedTheme={data?.theme ?? null}
       themeAction='/action/set-theme'
     >
-      <NuqsAdapter>
-        <ProviderLayout>{children}</ProviderLayout>
-      </NuqsAdapter>
+      <ProviderLayout>{children}</ProviderLayout>
     </ThemeProvider>
   )
 }

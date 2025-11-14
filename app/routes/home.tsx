@@ -25,7 +25,7 @@ export default function Home() {
         >
           <Link to={'/resources'}>
             <img
-              src='/resources.png'
+              src='/resources.webp'
               height={150}
               width={150}
             />
@@ -39,7 +39,7 @@ export default function Home() {
         >
           <Link to={'/banner'}>
             <img
-              src='/banner.png'
+              src='/banner.webp'
               height={150}
               width={150}
             />
@@ -53,7 +53,7 @@ export default function Home() {
         >
           <Link to={'/raid-score-calc'}>
             <img
-              src='/calc.png'
+              src='/calc.webp'
               height={150}
               width={150}
             />
