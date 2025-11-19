@@ -4,3 +4,8 @@ export const BA_STYLE = {
   text: 'skew-x-[11deg]',
   color: 'bg-secondary',
 }
+
+export const db_url =
+  process.env.NODE_ENV && process.env.NODE_ENV === 'production'
+    ? import.meta.env.VITE_DB_URL
+    : 'http://127.0.0.1:8000/api/v1'

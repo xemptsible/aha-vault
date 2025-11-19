@@ -1,6 +1,8 @@
+import { db_url } from '~/lib/const'
+
 export async function getResources(query?: string) {
   const response = await fetch(
-    `http://127.0.0.1:8000/api/v1/resources${query && query.length > 0 ? `/?${query}` : '/'}`,
+    `${db_url}/resources${query && query.length > 0 ? `/?${query}` : '/'}`,
   )
   const data = await response.json()
 

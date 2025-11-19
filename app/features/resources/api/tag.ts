@@ -1,5 +1,7 @@
+import { db_url } from '~/lib/const'
+
 export async function getTags() {
-  const response = await fetch('http://127.0.0.1:8000/api/v1/tags/')
+  const response = await fetch(`${db_url}/tags/`)
   const data = await response.json()
 
   return data
