@@ -197,22 +197,24 @@
 
 .tooltip::before,
 .tooltip::after {
-  opacity: 0;
+  scale: 0;
 }
 
-.tooltip:hover::before {
-  opacity: 1;
+.tooltip:hover::before,
+.tooltip:focus-visible::before {
+  scale: 1;
 
-  @apply transition;
+  @apply transition delay-75;
 }
 
 .tooltip::before,
 .tooltip::after {
   position: absolute;
-  inset-block-start: -85%;
+  inset-block-start: -100%;
 }
+
 .tooltip::before {
   content: attr(data-tooltip);
 
-  @apply rounded-md bg-black p-0.5 text-nowrap text-white outline;
+  @apply w-max max-w-[30ch] rounded-md bg-black p-0.5 text-wrap text-white outline;
 }

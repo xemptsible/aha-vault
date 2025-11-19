@@ -26,6 +26,7 @@ export default function ResourceFilter({ authors, tags }: ResourceFilterProps) {
           searchParams={searchParams}
           setSearchParams={setSearchParams}
           filterTitle={'Authors'}
+          tooltip='URL query: ?author='
         />
         <ResourceFilterCategory
           filters={tags}
@@ -33,6 +34,7 @@ export default function ResourceFilter({ authors, tags }: ResourceFilterProps) {
           searchParams={searchParams}
           setSearchParams={setSearchParams}
           filterTitle={'Tags'}
+          tooltip='URL query: ?tag='
         />
       </div>
 
@@ -67,10 +69,11 @@ function ResourceFilterCategory({
   return (
     <>
       <div className='flex items-center justify-between gap-2'>
-        <span className='relative flex items-center gap-0.5'>
+        <span className='relative flex items-center'>
           <h3>{filterTitle}</h3>
           {tooltip.length > 0 ? (
             <Button
+              aria-label='filter-tooltip'
               variant={'ghost'}
               size={'icon-sm'}
               className={'tooltip hover:bg-gray-200'}
