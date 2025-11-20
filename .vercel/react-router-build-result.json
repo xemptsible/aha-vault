@@ -1,0 +1,179 @@
+{
+  "buildManifest": {
+    "serverBundles": {
+      "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0": {
+        "id": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+        "file": "build/server/nodejs_eyJydW50aW1lIjoibm9kZWpzIn0/index.js",
+        "config": {
+          "runtime": "nodejs"
+        }
+      }
+    },
+    "routeIdToServerBundleId": {
+      "routes/home": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/banner": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/resource": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/raid-score-calc": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/action/set-theme": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0"
+    },
+    "routes": {
+      "root": {
+        "id": "root",
+        "file": "app/root.tsx",
+        "path": "",
+        "config": {}
+      },
+      "routes/home": {
+        "id": "routes/home",
+        "parentId": "root",
+        "file": "app/routes/home.tsx",
+        "index": true,
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/navigation/layout": {
+        "id": "routes/navigation/layout",
+        "parentId": "root",
+        "file": "app/routes/navigation/layout.tsx",
+        "config": {}
+      },
+      "routes/banner": {
+        "id": "routes/banner",
+        "parentId": "routes/navigation/layout",
+        "file": "app/routes/banner.tsx",
+        "path": "banner",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/resource": {
+        "id": "routes/resource",
+        "parentId": "routes/navigation/layout",
+        "file": "app/routes/resource.tsx",
+        "path": "resources",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/raid-score-calc": {
+        "id": "routes/raid-score-calc",
+        "parentId": "routes/navigation/layout",
+        "file": "app/routes/raid-score-calc.tsx",
+        "path": "raid-score-calc",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/action/set-theme": {
+        "id": "routes/action/set-theme",
+        "parentId": "root",
+        "file": "app/routes/action/set-theme.tsx",
+        "path": "action/set-theme",
+        "config": {
+          "runtime": "nodejs"
+        }
+      }
+    }
+  },
+  "reactRouterConfig": {
+    "appDirectory": "D:/projects/web-app-projects/aha-vault/app",
+    "basename": "/",
+    "buildDirectory": "D:/projects/web-app-projects/aha-vault/build",
+    "future": {
+      "v8_middleware": false,
+      "unstable_optimizeDeps": false,
+      "unstable_splitRouteModules": false,
+      "unstable_subResourceIntegrity": false,
+      "unstable_viteEnvironmentApi": false
+    },
+    "routes": {
+      "root": {
+        "id": "root",
+        "file": "root.tsx",
+        "path": ""
+      },
+      "routes/home": {
+        "id": "routes/home",
+        "parentId": "root",
+        "file": "routes/home.tsx",
+        "index": true
+      },
+      "routes/navigation/layout": {
+        "id": "routes/navigation/layout",
+        "parentId": "root",
+        "file": "routes/navigation/layout.tsx"
+      },
+      "routes/banner": {
+        "id": "routes/banner",
+        "parentId": "routes/navigation/layout",
+        "file": "routes/banner.tsx",
+        "path": "banner"
+      },
+      "routes/resource": {
+        "id": "routes/resource",
+        "parentId": "routes/navigation/layout",
+        "file": "routes/resource.tsx",
+        "path": "resources"
+      },
+      "routes/raid-score-calc": {
+        "id": "routes/raid-score-calc",
+        "parentId": "routes/navigation/layout",
+        "file": "routes/raid-score-calc.tsx",
+        "path": "raid-score-calc"
+      },
+      "routes/action/set-theme": {
+        "id": "routes/action/set-theme",
+        "parentId": "root",
+        "file": "routes/action/set-theme.tsx",
+        "path": "action/set-theme"
+      }
+    },
+    "routeDiscovery": {
+      "mode": "lazy",
+      "manifestPath": "/__manifest"
+    },
+    "serverBuildFile": "index.js",
+    "serverModuleFormat": "esm",
+    "ssr": true,
+    "unstable_routeConfig": [
+      {
+        "id": "root",
+        "path": "",
+        "file": "root.tsx",
+        "children": [
+          {
+            "file": "routes/home.tsx",
+            "index": true
+          },
+          {
+            "file": "routes/navigation/layout.tsx",
+            "children": [
+              {
+                "file": "routes/banner.tsx",
+                "path": "banner"
+              },
+              {
+                "file": "routes/resource.tsx",
+                "path": "resources"
+              },
+              {
+                "file": "routes/raid-score-calc.tsx",
+                "path": "raid-score-calc"
+              }
+            ]
+          },
+          {
+            "file": "routes/action/set-theme.tsx",
+            "path": "action/set-theme"
+          }
+        ]
+      }
+    ]
+  },
+  "viteConfig": {
+    "build": {
+      "assetsDir": "assets"
+    }
+  }
+}
