@@ -86,6 +86,12 @@ function ResourceFilterCategory({
         <div className='flex items-center gap-2'>
           <Button
             onClick={() => {
+              if (
+                searchParams.getAll(searchTag).length === filters.data.length
+              ) {
+                return
+              }
+
               setSearchParams((searchParams) => {
                 filters.data.forEach((filter) => {
                   if (!searchParams.has(searchTag, filter.name)) {

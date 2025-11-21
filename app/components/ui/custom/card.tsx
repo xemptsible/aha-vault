@@ -1,9 +1,9 @@
+import { ExternalLink } from 'lucide-react'
 import { Link } from 'react-router'
 import type { Resource } from '~/types/resource'
 import { Badge } from '../badge'
 import { Card, CardContent, CardHeader, CardTitle } from '../card'
 import { Separator } from '../separator'
-import { ExternalLink } from 'lucide-react'
 
 export default function ResourceCard({ resource }: { resource: Resource }) {
   return (
@@ -51,7 +51,7 @@ export default function ResourceCard({ resource }: { resource: Resource }) {
         <img
           src={resource.image?.url ?? '/placeholder-arona.webp'}
           alt={
-            resource.image?.alt_image ??
+            resource.image?.alt_text ??
             'Placeholder image with Arona, the AI assistant from Blue Archive in a small form'
           }
           height={'250'}
