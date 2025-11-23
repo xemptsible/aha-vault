@@ -6,6 +6,21 @@ import { Card, CardContent, CardHeader, CardTitle } from '../card'
 import { Separator } from '../separator'
 
 export default function ResourceCard({ resource }: { resource: Resource }) {
+  function getClickableImageLink() {
+    const image = resource.image
+
+    if (image && image.url.length > 0) {
+      if (image.url.includes('wsrv')) {
+        return image.url.replace('&q=1', '')
+      }
+      if (image.url.includes('imgur')) {
+        return image.url.replace('t.', '.')
+      }
+    }
+
+    return resource.image?.url ?? ''
+  }
+
   return (
     <Card className='h-min'>
       <CardHeader>
@@ -48,16 +63,21 @@ export default function ResourceCard({ resource }: { resource: Resource }) {
             </Badge>
           )}
         </div>
-        <img
-          src={resource.image?.url ?? '/placeholder-arona.webp'}
-          alt={
-            resource.image?.alt_text ??
-            'Placeholder image with Arona, the AI assistant from Blue Archive in a small form'
-          }
-          height={'250'}
-          width={'250'}
-          className='mx-auto'
-        />
+        <Link
+          target='_blank'
+          to={getClickableImageLink()}
+        >
+          <img
+            src={resource.image?.url ?? '/placeholder-arona.webp'}
+            alt={
+              resource.image?.alt_text ??
+              'Placeholder image with Arona, the AI assistant from Blue Archive in a small form'
+            }
+            width={'250'}
+            className='mx-auto'
+            loading='lazy'
+          />
+        </Link>
         <Separator />
         <div
           data-slot='card-tag'

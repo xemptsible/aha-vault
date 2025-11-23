@@ -1,5 +1,5 @@
 import { CircleQuestionMark } from 'lucide-react'
-import { useSearchParams, type SetURLSearchParams } from 'react-router'
+import { Link, useSearchParams, type SetURLSearchParams } from 'react-router'
 import { Button } from '~/components/ui/button'
 import { Checkbox } from '~/components/ui/checkbox'
 import { Label } from '~/components/ui/label'
@@ -12,6 +12,18 @@ interface ResourceFilterProps {
   tags: Tags
 }
 
+interface ResourceFilterCategoryProps {
+  filters: {
+    data: { id: number; name: string; personal_site?: string }[]
+    count: number
+  }
+  filterTitle: string
+  tooltip: string
+  searchTag: string
+  searchParams: URLSearchParams
+  setSearchParams: SetURLSearchParams
+}
+
 export default function ResourceFilter({ authors, tags }: ResourceFilterProps) {
   const [searchParams, setSearchParams] = useSearchParams()
 
@@ -22,29 +34,33 @@ export default function ResourceFilter({ authors, tags }: ResourceFilterProps) {
       <div className='grid gap-2 pb-4'>
         <ResourceFilterCategory
           filters={authors}
+          filterTitle={'Authors'}
           searchTag={'author'}
           searchParams={searchParams}
           setSearchParams={setSearchParams}
-          filterTitle={'Authors'}
           tooltip='URL query: ?author='
         />
         <ResourceFilterCategory
           filters={tags}
+          filterTitle={'Tags'}
           searchTag={'tag'}
           searchParams={searchParams}
           setSearchParams={setSearchParams}
-          filterTitle={'Tags'}
           tooltip='URL query: ?tag='
         />
       </div>
 
       <Button
         className={cn({ hidden: searchParams.size == 0 })}
-        onClick={() => {
+        // Override link behavior if JS is enabled
+        onClick={(e) => {
+          e.preventDefault()
+
           setSearchParams({})
         }}
+        asChild
       >
-        Clear all filter(s)
+        <Link to={'/resources'}>Clear all filter(s)</Link>
       </Button>
     </aside>
   )
@@ -57,15 +73,27 @@ function ResourceFilterCategory({
   searchTag,
   searchParams,
   setSearchParams,
-}: {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  filters: { data: any[]; count: number }
-  filterTitle: string
-  tooltip?: string
-  searchTag: string
-  searchParams: URLSearchParams
-  setSearchParams: SetURLSearchParams
-}) {
+}: ResourceFilterCategoryProps) {
+  function checkCurrentQueryParam({
+    searchParamName,
+  }: {
+    searchParamName: string
+  }) {
+    const encodedParam = encodeURI(searchParamName)
+
+    if (searchParams.has(searchTag, searchParamName)) {
+      const regex = new RegExp(`&?${searchTag}=${encodedParam}&?`, 'g')
+
+      // TODO: Use exec() or test() to check if the regex contains more than 2
+      // ampersands, for more complicated regex replacement
+      return `?${searchParams.toString().replace(regex, '&')}`
+    }
+
+    return !searchParams.has(searchTag, searchParamName)
+      ? `?${searchParams.toString()}&${searchTag}=${searchParamName}`
+      : `?${searchTag}=${searchParamName}`
+  }
+
   return (
     <>
       <div className='flex items-center justify-between gap-2'>
@@ -142,7 +170,29 @@ function ResourceFilterCategory({
                       }
                     }}
                   />
-                  <span>{searchParamName}</span>
+                  <Link
+                    to={checkCurrentQueryParam({
+                      searchParamName,
+                    })}
+                    // Override link behavior if JS is enabled
+                    onClick={(e) => {
+                      e.preventDefault()
+
+                      if (!searchParams.has(searchTag, searchParamName)) {
+                        setSearchParams((searchParams) => {
+                          searchParams.append(searchTag, searchParamName)
+                          return searchParams
+                        })
+                      } else {
+                        setSearchParams((searchParams) => {
+                          searchParams.delete(searchTag, searchParamName)
+                          return searchParams
+                        })
+                      }
+                    }}
+                  >
+                    <span>{searchParamName}</span>
+                  </Link>
                 </Label>
               )
             })
