@@ -19,7 +19,7 @@ const buttonVariants = cva(
           'bg-secondary text-secondary-foreground hover:bg-secondary/80',
         ghost:
           'hover:bg-secondary hover:text-secondary-foreground dark:hover:bg-secondary',
-        link: 'text-black underline-offset-4 hover:underline',
+        link: 'underline-offset-4 hover:underline',
         'ba-main': `${BA_STYLE.default} bg-primary transition active:scale-[0.95] text-primary-foreground`,
         'ba-ghost': `${BA_STYLE.default} hover:bg-accent transition active:scale-[0.95] dark:hover:bg-accent dark:hover:text-accent-foreground`,
         'ba-glow': `text-foreground/70 hover:text-foreground data-[state=open]:text-foreground`,
@@ -28,6 +28,7 @@ const buttonVariants = cva(
         default: 'h-9 px-4 py-2 has-[>svg]:px-3',
         sm: 'h-8 gap-1.5 rounded-md px-3 has-[>svg]:px-2.5',
         lg: 'h-10 rounded-md px-6 has-[>svg]:px-4',
+        link: 'h-7',
         icon: 'size-9',
         'icon-sm': 'size-8',
         'icon-lg': 'size-10',

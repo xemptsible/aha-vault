@@ -17,7 +17,7 @@ export default function Home() {
         </h1>
         <ThemeToggle />
       </header>
-      <main className='container mx-auto flex flex-1 items-center justify-center gap-4 flex-wrap'>
+      <main className='container mx-auto flex flex-1 flex-wrap items-center justify-center gap-4'>
         <Button
           variant={'ghost'}
           className={`h-fit flex-col`}
@@ -28,6 +28,7 @@ export default function Home() {
               src='/resources.webp'
               height={125}
               width={125}
+              aria-hidden
             />
             <span className='text-lg font-semibold'>Resources</span>
           </Link>
@@ -42,6 +43,7 @@ export default function Home() {
               src='/banner.webp'
               height={125}
               width={125}
+              aria-hidden
             />
             <span className='text-lg font-semibold'>Banner</span>
           </Link>
@@ -56,6 +58,7 @@ export default function Home() {
               src='/calc.webp'
               height={125}
               width={125}
+              aria-hidden
             />
             <span className='text-lg font-semibold'>Raid Score Calculator</span>
           </Link>

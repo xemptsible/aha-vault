@@ -1,11 +1,13 @@
 import { CircleQuestionMark } from 'lucide-react'
 import { Link, useSearchParams, type SetURLSearchParams } from 'react-router'
+import { useIsClient } from 'usehooks-ts'
 import { Button } from '~/components/ui/button'
-import { Checkbox } from '~/components/ui/checkbox'
 import { Label } from '~/components/ui/label'
 import { cn } from '~/lib/utils'
 import type { Authors } from '~/types/author'
+import type { Resource } from '~/types/resource'
 import type { Tags } from '~/types/tag'
+import FilterCheckbox from './filter-checkbox'
 
 interface ResourceFilterProps {
   authors: Authors
@@ -14,7 +16,13 @@ interface ResourceFilterProps {
 
 interface ResourceFilterCategoryProps {
   filters: {
-    data: { id: number; name: string; personal_site?: string }[]
+    data: {
+      id: number
+      name: string
+      personal_site?: string
+      related_resources?: Array<Resource> // Tags only
+      credited_resources?: Array<Resource> // Authors only
+    }[]
     count: number
   }
   filterTitle: string
@@ -30,8 +38,7 @@ export default function ResourceFilter({ authors, tags }: ResourceFilterProps) {
   return (
     <aside className='flex-2/6 xl:flex-1/6'>
       <h2 className='sr-only'>Resource Filter</h2>
-
-      <div className='grid gap-2 pb-4'>
+      <div className='grid gap-3'>
         <ResourceFilterCategory
           filters={authors}
           filterTitle={'Authors'}
@@ -48,20 +55,22 @@ export default function ResourceFilter({ authors, tags }: ResourceFilterProps) {
           setSearchParams={setSearchParams}
           tooltip='URL query: ?tag='
         />
+        <Button
+          className={cn({ hidden: searchParams.size === 0 })}
+          // Override link behavior if JS is enabled
+          onClick={() => {
+            setSearchParams({})
+          }}
+          asChild
+        >
+          <Link
+            to={'/resources'}
+            preventScrollReset
+          >
+            Clear all filter(s)
+          </Link>
+        </Button>
       </div>
-
-      <Button
-        className={cn({ hidden: searchParams.size == 0 })}
-        // Override link behavior if JS is enabled
-        onClick={(e) => {
-          e.preventDefault()
-
-          setSearchParams({})
-        }}
-        asChild
-      >
-        <Link to={'/resources'}>Clear all filter(s)</Link>
-      </Button>
     </aside>
   )
 }
@@ -74,11 +83,9 @@ function ResourceFilterCategory({
   searchParams,
   setSearchParams,
 }: ResourceFilterCategoryProps) {
-  function checkCurrentQueryParam({
-    searchParamName,
-  }: {
-    searchParamName: string
-  }) {
+  const isClient = useIsClient()
+
+  function setParamLink(searchParamName: string) {
     const encodedParam = encodeURI(searchParamName)
 
     if (searchParams.has(searchTag, searchParamName)) {
@@ -92,6 +99,20 @@ function ResourceFilterCategory({
     return !searchParams.has(searchTag, searchParamName)
       ? `?${searchParams.toString()}&${searchTag}=${searchParamName}`
       : `?${searchTag}=${searchParamName}`
+  }
+
+  function selectAllParams() {
+    let param = searchParams.toString()
+
+    for (let i = 0; i < filters.data.length; i++) {
+      if (i === 0 && param.length === 0) {
+        param += `?${searchTag}=${filters.data[i].name}`
+      } else {
+        param += `&${searchTag}=${filters.data[i].name}`
+      }
+    }
+
+    return param
   }
 
   return (
@@ -113,6 +134,9 @@ function ResourceFilterCategory({
         </span>
         <div className='flex items-center gap-2'>
           <Button
+            size={'sm'}
+            type='button'
+            // Override link behavior if JS is enabled
             onClick={() => {
               if (
                 searchParams.getAll(searchTag).length === filters.data.length
@@ -129,75 +153,104 @@ function ResourceFilterCategory({
                 return searchParams
               })
             }}
-            size={'sm'}
+            asChild
           >
-            Select all
+            <Link
+              to={{ search: selectAllParams() }}
+              preventScrollReset
+            >
+              Select all
+            </Link>
           </Button>
           <Button
+            variant={'outline'}
+            type='button'
+            size={'sm'}
+            aria-label={`Clear all ${searchTag} filter(s)`}
+            // Override link behavior if JS is enabled
             onClick={() => {
               setSearchParams((searchParams) => {
                 searchParams.delete(searchTag)
                 return searchParams
               })
             }}
-            size={'sm'}
-            variant={'outline'}
+            asChild
           >
-            Clear
+            <Link
+              to={'/resources'}
+              preventScrollReset
+            >
+              Clear
+            </Link>
           </Button>
         </div>
       </div>
-      <div className='grid gap-3'>
+
+      <ul
+        className='grid gap-2'
+        id={`filter-${searchTag}`}
+        aria-label={`List of filter option for resource-related ${searchTag}`}
+      >
         {filters && filters.data.length > 0
           ? filters.data.map((filter) => {
               const searchParamName = filter.name
+              const resouceCount =
+                ((filter.related_resources &&
+                  filter.related_resources.length) ||
+                  (filter.credited_resources &&
+                    filter.credited_resources.length)) ??
+                0
 
               return (
-                <Label key={filter.id}>
-                  <Checkbox
-                    checked={searchParams.has(searchTag, searchParamName)}
-                    onCheckedChange={(checked) => {
-                      if (checked) {
-                        setSearchParams((searchParams) => {
-                          searchParams.append(searchTag, searchParamName)
-                          return searchParams
-                        })
-                      } else {
-                        setSearchParams((searchParams) => {
-                          searchParams.delete(searchTag, searchParamName)
-                          return searchParams
-                        })
-                      }
-                    }}
+                <li
+                  className='flex'
+                  key={filter.id}
+                >
+                  <FilterCheckbox
+                    searchParamName={searchParamName}
+                    searchTag={searchTag}
+                    searchParams={searchParams}
+                    setSearchParams={setSearchParams}
+                    isClient={isClient}
                   />
-                  <Link
-                    to={checkCurrentQueryParam({
-                      searchParamName,
-                    })}
-                    // Override link behavior if JS is enabled
-                    onClick={(e) => {
-                      e.preventDefault()
-
-                      if (!searchParams.has(searchTag, searchParamName)) {
-                        setSearchParams((searchParams) => {
-                          searchParams.append(searchTag, searchParamName)
-                          return searchParams
-                        })
-                      } else {
-                        setSearchParams((searchParams) => {
-                          searchParams.delete(searchTag, searchParamName)
-                          return searchParams
-                        })
-                      }
-                    }}
+                  <Label
+                    htmlFor={`checkbox-${searchParamName}`}
+                    aria-label={`${filter.name}, found ${resouceCount} resources with this ${searchTag}`}
                   >
-                    <span>{searchParamName}</span>
-                  </Link>
-                </Label>
+                    <Button
+                      variant={'link'}
+                      size={'link'}
+                      className='custom-cb-btn'
+                      asChild
+                    >
+                      <Link
+                        to={setParamLink(searchParamName)}
+                        preventScrollReset
+                        tabIndex={isClient ? -1 : 0}
+                        // Override link behavior if JS is enabled
+                        onClick={() => {
+                          if (!searchParams.has(searchTag, searchParamName)) {
+                            setSearchParams((searchParams) => {
+                              searchParams.append(searchTag, searchParamName)
+                              return searchParams
+                            })
+                          } else {
+                            setSearchParams((searchParams) => {
+                              searchParams.delete(searchTag, searchParamName)
+                              return searchParams
+                            })
+                          }
+                        }}
+                      >
+                        {`${searchParamName} (${resouceCount})`}
+                      </Link>
+                    </Button>
+                  </Label>
+                </li>
               )
             })
           : null}
-      </div>
+      </ul>
     </>
   )
 }

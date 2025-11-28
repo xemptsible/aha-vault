@@ -67,16 +67,21 @@ export default function ResourceCard({ resource }: { resource: Resource }) {
           target='_blank'
           to={getClickableImageLink()}
         >
-          <img
-            src={resource.image?.url ?? '/placeholder-arona.webp'}
-            alt={
-              resource.image?.alt_text ??
-              'Placeholder image with Arona, the AI assistant from Blue Archive in a small form'
-            }
-            width={'250'}
-            className='mx-auto'
-            loading='lazy'
-          />
+          <picture>
+            <source
+              srcSet={resource.image?.url}
+              type='image/webp'
+            />
+            <img
+              src={'/placeholder-arona.webp'}
+              alt={
+                resource.image?.alt_text ??
+                'Placeholder image with Arona, the AI assistant from Blue Archive drawn in chibi artstyle'
+              }
+              className='mx-auto size-full'
+              loading='lazy'
+            />
+          </picture>
         </Link>
         <Separator />
         <div

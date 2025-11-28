@@ -128,6 +128,28 @@
   --shadow-xl:
     0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 8px 10px -1px hsl(0 0% 0% / 0.1);
   --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
+
+  .filter-checkbox + label::before {
+    content: '';
+
+    @apply bg-input/30 border-input size-checkbox flex items-center justify-center rounded-sm border text-2xl;
+  }
+
+  .filter-checkbox:focus-visible + label::before {
+    content: '';
+
+    @apply outline-ring/50 border-ring shadow-sm outline-3 transition-shadow;
+  }
+
+  .filter-checkbox:checked + label::before {
+    content: '✓';
+
+    @apply text-primary-foreground bg-primary size-checkbox rounded-sm border-none;
+  }
+
+  .filter-checkbox:checked:focus-visible + label::before {
+    @apply outline-accent border-ring border shadow-sm outline-3 transition-shadow;
+  }
 }
 
 @theme inline {
@@ -181,11 +203,13 @@
   --shadow-lg: var(--shadow-lg);
   --shadow-xl: var(--shadow-xl);
   --shadow-2xl: var(--shadow-2xl);
+
+  --size-checkbox: calc(var(--spacing) * 6);
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border outline-ring/50 motion-reduce:animate-none! motion-reduce:transition-none!;
   }
   body {
     @apply bg-background text-foreground h-full;
@@ -204,7 +228,7 @@
 .tooltip:focus-visible::before {
   scale: 1;
 
-  @apply transition delay-75;
+  @apply transition delay-75 motion-reduce:transition-none;
 }
 
 .tooltip::before,
@@ -217,4 +241,35 @@
   content: attr(data-tooltip);
 
   @apply w-max max-w-[30ch] rounded-md bg-black p-0.5 text-wrap text-white outline;
+}
+
+.filter-checkbox {
+  @apply sr-only;
+}
+
+.filter-checkbox + label::before {
+  content: '';
+
+  @apply border-input size-checkbox flex items-center justify-center rounded-sm border text-2xl;
+}
+
+.filter-checkbox:focus-visible + label::before {
+  content: '';
+
+  @apply outline-ring/50 border-ring shadow-sm outline-3 transition-shadow;
+}
+
+.filter-checkbox:checked + label::before {
+  content: '✓';
+
+  @apply text-primary-foreground bg-primary size-checkbox rounded-sm border-none;
+}
+
+.filter-checkbox:checked:focus-visible + label::before {
+  @apply outline-ring border-ring border shadow-sm outline-3 transition-shadow;
+}
+
+.filter-checkbox:disabled + label::before,
+.filter-checkbox:disabled + label {
+  opacity: 70%;
 }

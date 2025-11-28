@@ -12,7 +12,7 @@
     "routeIdToServerBundleId": {
       "routes/home": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
       "routes/banner": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
-      "routes/resource": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/resource/main": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
       "routes/raid-score-calc": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
       "routes/action/set-theme": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0"
     },
@@ -32,25 +32,31 @@
           "runtime": "nodejs"
         }
       },
-      "routes/navigation/layout": {
-        "id": "routes/navigation/layout",
+      "routes/_layout": {
+        "id": "routes/_layout",
         "parentId": "root",
-        "file": "app/routes/navigation/layout.tsx",
+        "file": "app/routes/_layout.tsx",
         "config": {}
       },
       "routes/banner": {
         "id": "routes/banner",
-        "parentId": "routes/navigation/layout",
+        "parentId": "routes/_layout",
         "file": "app/routes/banner.tsx",
         "path": "banner",
         "config": {
           "runtime": "nodejs"
         }
       },
-      "routes/resource": {
-        "id": "routes/resource",
-        "parentId": "routes/navigation/layout",
-        "file": "app/routes/resource.tsx",
+      "resource-loader": {
+        "id": "resource-loader",
+        "parentId": "routes/_layout",
+        "file": "app/routes/resource/_layout.tsx",
+        "config": {}
+      },
+      "routes/resource/main": {
+        "id": "routes/resource/main",
+        "parentId": "resource-loader",
+        "file": "app/routes/resource/main.tsx",
         "path": "resources",
         "config": {
           "runtime": "nodejs"
@@ -58,7 +64,7 @@
       },
       "routes/raid-score-calc": {
         "id": "routes/raid-score-calc",
-        "parentId": "routes/navigation/layout",
+        "parentId": "routes/_layout",
         "file": "app/routes/raid-score-calc.tsx",
         "path": "raid-score-calc",
         "config": {
@@ -99,26 +105,31 @@
         "file": "routes/home.tsx",
         "index": true
       },
-      "routes/navigation/layout": {
-        "id": "routes/navigation/layout",
+      "routes/_layout": {
+        "id": "routes/_layout",
         "parentId": "root",
-        "file": "routes/navigation/layout.tsx"
+        "file": "routes/_layout.tsx"
       },
       "routes/banner": {
         "id": "routes/banner",
-        "parentId": "routes/navigation/layout",
+        "parentId": "routes/_layout",
         "file": "routes/banner.tsx",
         "path": "banner"
       },
-      "routes/resource": {
-        "id": "routes/resource",
-        "parentId": "routes/navigation/layout",
-        "file": "routes/resource.tsx",
+      "resource-loader": {
+        "id": "resource-loader",
+        "parentId": "routes/_layout",
+        "file": "routes/resource/_layout.tsx"
+      },
+      "routes/resource/main": {
+        "id": "routes/resource/main",
+        "parentId": "resource-loader",
+        "file": "routes/resource/main.tsx",
         "path": "resources"
       },
       "routes/raid-score-calc": {
         "id": "routes/raid-score-calc",
-        "parentId": "routes/navigation/layout",
+        "parentId": "routes/_layout",
         "file": "routes/raid-score-calc.tsx",
         "path": "raid-score-calc"
       },
@@ -147,15 +158,21 @@
             "index": true
           },
           {
-            "file": "routes/navigation/layout.tsx",
+            "file": "routes/_layout.tsx",
             "children": [
               {
                 "file": "routes/banner.tsx",
                 "path": "banner"
               },
               {
-                "file": "routes/resource.tsx",
-                "path": "resources"
+                "file": "routes/resource/_layout.tsx",
+                "children": [
+                  {
+                    "file": "routes/resource/main.tsx",
+                    "path": "resources"
+                  }
+                ],
+                "id": "resource-loader"
               },
               {
                 "file": "routes/raid-score-calc.tsx",

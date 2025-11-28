@@ -7,9 +7,11 @@ import {
 
 export default [
   index('routes/home.tsx'),
-  layout('routes/navigation/layout.tsx', [
+  layout('routes/_layout.tsx', [
     route('banner', 'routes/banner.tsx'),
-    route('resources', 'routes/resource.tsx'),
+    layout('routes/resource/_layout.tsx', { id: 'resource-loader' }, [
+      route('resources', 'routes/resource/main.tsx'),
+    ]),
     route('raid-score-calc', 'routes/raid-score-calc.tsx'),
   ]),
 
