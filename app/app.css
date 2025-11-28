@@ -129,26 +129,34 @@
     0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 8px 10px -1px hsl(0 0% 0% / 0.1);
   --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
 
-  .filter-checkbox + label::before {
-    content: '';
+  .filter-checkbox {
+    appearance: none;
 
-    @apply bg-input/30 border-input size-checkbox flex items-center justify-center rounded-sm border text-2xl;
-  }
+    @apply border-input bg-input/30 relative box-border aspect-square rounded-sm border;
 
-  .filter-checkbox:focus-visible + label::before {
-    content: '';
+    &:focus-visible {
+      @apply border-ring outline-ring/50 outline-3 transition-all motion-reduce:transition-none;
+    }
 
-    @apply outline-ring/50 border-ring shadow-sm outline-3 transition-shadow;
-  }
+    &:focus-visible:checked {
+      @apply border-accent outline-accent/50 outline-3 transition-all motion-reduce:transition-none;
+    }
 
-  .filter-checkbox:checked + label::before {
-    content: '✓';
+    &:checked {
+      @apply bg-primary border-primary;
+    }
 
-    @apply text-primary-foreground bg-primary size-checkbox rounded-sm border-none;
-  }
+    &:checked::after {
+      content: '';
+      mask: var(--checkmark-mask) no-repeat center / contain;
 
-  .filter-checkbox:checked:focus-visible + label::before {
-    @apply outline-accent border-ring border shadow-sm outline-3 transition-shadow;
+      @apply bg-primary-foreground absolute inset-0 m-1;
+    }
+
+    &:disabled,
+    &:disabled + label {
+      @apply opacity-50;
+    }
   }
 }
 
@@ -205,6 +213,7 @@
   --shadow-2xl: var(--shadow-2xl);
 
   --size-checkbox: calc(var(--spacing) * 6);
+  --checkmark-mask: url('data:image/svg+xml,%3Csvg%20width%3D%2212px%22%20height%3D%2212px%22%20viewBox%3D%220%200%200.54%200.54%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20aria-hidden%3D%22true%22%20role%3D%22img%22%20class%3D%22iconify%20iconify--twemoji%22%20preserveAspectRatio%3D%22xMidYMid%20meet%22%3E%3Cpath%20fill%3D%22%2331373D%22%20d%3D%22M0.517%200.021a0.045%200.045%200%200%200%20-0.062%200.013L0.203%200.422%200.08%200.308a0.045%200.045%200%201%200%20-0.061%200.066L0.18%200.523l0.007%200.005A0.045%200.045%200%200%200%200.249%200.515L0.53%200.083A0.045%200.045%200%200%200%200.517%200.02%22%2F%3E%3C%2Fsvg%3E');
 }
 
 @layer base {
@@ -244,32 +253,23 @@
 }
 
 .filter-checkbox {
-  @apply sr-only;
-}
+  appearance: none;
 
-.filter-checkbox + label::before {
-  content: '';
+  @apply border-input relative box-border aspect-square rounded-sm border;
 
-  @apply border-input size-checkbox flex items-center justify-center rounded-sm border text-2xl;
-}
+  &:focus-visible {
+    @apply border-ring outline-ring/50 outline-3 transition-all motion-reduce:transition-none;
+  }
 
-.filter-checkbox:focus-visible + label::before {
-  content: '';
+  &:checked::after {
+    content: '';
+    mask: var(--checkmark-mask) no-repeat center / contain;
 
-  @apply outline-ring/50 border-ring shadow-sm outline-3 transition-shadow;
-}
+    @apply bg-primary absolute inset-0 m-1;
+  }
 
-.filter-checkbox:checked + label::before {
-  content: '✓';
-
-  @apply text-primary-foreground bg-primary size-checkbox rounded-sm border-none;
-}
-
-.filter-checkbox:checked:focus-visible + label::before {
-  @apply outline-ring border-ring border shadow-sm outline-3 transition-shadow;
-}
-
-.filter-checkbox:disabled + label::before,
-.filter-checkbox:disabled + label {
-  opacity: 70%;
+  &:disabled,
+  &:disabled + label {
+    @apply opacity-50;
+  }
 }

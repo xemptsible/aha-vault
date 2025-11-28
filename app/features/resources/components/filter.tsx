@@ -203,7 +203,7 @@ function ResourceFilterCategory({
 
               return (
                 <li
-                  className='flex'
+                  className='flex gap-2'
                   key={filter.id}
                 >
                   <FilterCheckbox
@@ -220,7 +220,6 @@ function ResourceFilterCategory({
                     <Button
                       variant={'link'}
                       size={'link'}
-                      className='custom-cb-btn'
                       asChild
                     >
                       <Link
