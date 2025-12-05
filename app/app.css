@@ -228,34 +228,32 @@
   }
 }
 
-.tooltip::before,
-.tooltip::after {
-  scale: 0;
-}
-
-.tooltip:hover::before,
-.tooltip:focus-visible::before {
-  scale: 1;
-
-  @apply transition delay-75 motion-reduce:transition-none;
-}
-
-.tooltip::before,
-.tooltip::after {
+.tooltip + div[id='tooltip-content'] > *[role='tooltip'] {
   position: absolute;
-  inset-block-start: -100%; 
+  opacity: 0;
 }
 
-.tooltip::before {
-  content: attr(data-tooltip);
+/* Disable tooltip hover effect if the tooltip is not being hovered over */
+.tooltip:not(:hover) + div[id='tooltip-content'] {
+  pointer-events: none;
+}
 
-  @apply w-max max-w-[30ch] rounded-md bg-black p-0.5 text-wrap text-white outline;
+.tooltip:hover + div[id='tooltip-content'] > *[role='tooltip'],
+.tooltip:focus-visible + div[id='tooltip-content'] > *[role='tooltip'] {
+  opacity: 1;
+
+  @apply transition delay-500 duration-100 motion-reduce:transition-none;
+}
+
+div[id='tooltip-content'] > *[role='tooltip']:hover {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .filter-checkbox {
   appearance: none;
 
-  @apply border-input size-6 relative box-border aspect-square rounded-sm border;
+  @apply border-input relative box-border aspect-square size-6 rounded-sm border;
 
   &:focus-visible {
     @apply border-ring outline-ring/50 outline-3 transition-all motion-reduce:transition-none;

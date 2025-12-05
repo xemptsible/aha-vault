@@ -1,4 +1,3 @@
-import { CircleQuestionMark } from 'lucide-react'
 import { Link, useSearchParams, type SetURLSearchParams } from 'react-router'
 import { useIsClient } from 'usehooks-ts'
 import { Button } from '~/components/ui/button'
