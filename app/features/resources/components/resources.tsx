@@ -1,6 +1,6 @@
-import ResourceCard from '~/components/ui/custom/card'
 import type { Resources } from '~/types/resource'
 import EmptyResources from './empty'
+import ResourceCard from './card'
 
 export default function ResourceView({
   resolvedResources,

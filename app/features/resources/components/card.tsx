@@ -1,9 +1,9 @@
-import { ExternalLink } from 'lucide-react'
+import { Separator } from '@radix-ui/react-dropdown-menu'
 import { Link } from 'react-router'
+import { AhaExternalLinkIcon } from '~/components/icon'
+import { Badge } from '~/components/ui/badge'
+import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
 import type { Resource } from '~/types/resource'
-import { Badge } from '../badge'
-import { Card, CardContent, CardHeader, CardTitle } from '../card'
-import { Separator } from '../separator'
 
 export default function ResourceCard({ resource }: { resource: Resource }) {
   function getClickableImageLink() {
@@ -26,10 +26,12 @@ export default function ResourceCard({ resource }: { resource: Resource }) {
       <CardHeader>
         <CardTitle>
           <Link
-            className='underline underline-offset-2'
+            className='flex items-center gap-1 underline underline-offset-2'
+            target='_blank'
             to={resource.url}
           >
             {resource.title}
+            <AhaExternalLinkIcon className='size-[14px] dark:invert' />
           </Link>
         </CardTitle>
         <div
@@ -39,15 +41,19 @@ export default function ResourceCard({ resource }: { resource: Resource }) {
           {resource.authors.length > 0 ? (
             resource.authors.map((author) => {
               return author.personal_site.length > 0 ? (
-                <Link
-                  to={author.personal_site}
+                <Badge
                   key={author.id}
+                  variant={'ba-default'}
+                  asChild
                 >
-                  <Badge variant={'ba-default'}>
+                  <Link
+                    to={author.personal_site}
+                    key={author.id}
+                  >
                     <span>{author.name}</span>
-                    <ExternalLink />
-                  </Badge>
-                </Link>
+                    <AhaExternalLinkIcon />
+                  </Link>
+                </Badge>
               ) : (
                 <Badge
                   variant={'ba-default'}
@@ -78,7 +84,9 @@ export default function ResourceCard({ resource }: { resource: Resource }) {
                 resource.image?.alt_text ??
                 'Placeholder image with Arona, the AI assistant from Blue Archive drawn in chibi artstyle'
               }
-              className='mx-auto size-full'
+              width={250}
+              height={250}
+              className='mx-auto aspect-square object-cover'
               loading='lazy'
             />
           </picture>

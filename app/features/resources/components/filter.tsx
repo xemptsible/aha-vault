@@ -26,7 +26,6 @@ interface ResourceFilterCategoryProps {
     count: number
   }
   filterTitle: string
-  tooltip: string
   searchTag: string
   searchParams: URLSearchParams
   setSearchParams: SetURLSearchParams
@@ -45,7 +44,6 @@ export default function ResourceFilter({ authors, tags }: ResourceFilterProps) {
           searchTag={'author'}
           searchParams={searchParams}
           setSearchParams={setSearchParams}
-          tooltip='URL query: ?author='
         />
         <ResourceFilterCategory
           filters={tags}
@@ -53,12 +51,13 @@ export default function ResourceFilter({ authors, tags }: ResourceFilterProps) {
           searchTag={'tag'}
           searchParams={searchParams}
           setSearchParams={setSearchParams}
-          tooltip='URL query: ?tag='
         />
         <Button
           className={cn({ hidden: searchParams.size === 0 })}
           // Override link behavior if JS is enabled
-          onClick={() => {
+          onClick={(e) => {
+            e.preventDefault()
+
             setSearchParams({})
           }}
           asChild
@@ -78,14 +77,12 @@ export default function ResourceFilter({ authors, tags }: ResourceFilterProps) {
 function ResourceFilterCategory({
   filters,
   filterTitle,
-  tooltip = '',
   searchTag,
   searchParams,
   setSearchParams,
 }: ResourceFilterCategoryProps) {
   const isClient = useIsClient()
-
-  function setParamLink(searchParamName: string) {
+  const paramLink = (searchParamName: string) => {
     const encodedParam = encodeURI(searchParamName)
 
     if (searchParams.has(searchTag, searchParamName)) {
@@ -100,44 +97,57 @@ function ResourceFilterCategory({
       ? `?${searchParams.toString()}&${searchTag}=${searchParamName}`
       : `?${searchTag}=${searchParamName}`
   }
-
-  function selectAllParams() {
+  const allParamLinkByTag = () => {
     let param = searchParams.toString()
 
-    for (let i = 0; i < filters.data.length; i++) {
-      if (i === 0 && param.length === 0) {
-        param += `?${searchTag}=${filters.data[i].name}`
-      } else {
-        param += `&${searchTag}=${filters.data[i].name}`
+    if (searchParams.getAll(searchTag).length !== filters.count) {
+      for (let i = 0; i < filters.count; i++) {
+        if (i === 0 && param.length === 0) {
+          param += `?${searchTag}=${filters.data[i].name}`
+        } else if (!searchParams.has(searchTag, filters.data[i].name)) {
+          param += `&${searchTag}=${filters.data[i].name}`
+        }
       }
     }
 
+    return param
+  }
+  const clearParamByTag = () => {
+    let param = searchParams.toString()
+
+    for (let i = 0; i < filters.count; i++) {
+      const encodedName = encodeURI(filters.data[i].name)
+      if (searchParams.has(searchTag, filters.data[i].name)) {
+        const regex = new RegExp(`&?${searchTag}=${encodedName}&?`, 'g')
+
+        // TODO: Use exec() or test() to check if the regex contains more than 2
+        // ampersands, for more complicated regex replacement
+        param = `${param.replace(regex, '')}`
+      }
+    }
     return param
   }
 
   return (
     <>
       <div className='flex items-center justify-between gap-2'>
-        <span className='relative flex items-center'>
+        <div>
           <h3>{filterTitle}</h3>
-          {tooltip.length > 0 ? (
-            <Button
-              aria-label='filter-tooltip'
-              variant={'ghost'}
-              size={'icon-sm'}
-              className={'tooltip hover:bg-gray-200'}
-              data-tooltip={tooltip}
-            >
-              <CircleQuestionMark />
-            </Button>
-          ) : null}
-        </span>
+          <code
+            className='text-sm'
+            aria-description='You can search specific term for this tag by typing the following parameter at the end of the URL:'
+          >
+            <span aria-description='question mark'>?</span>
+            {searchTag}=
+          </code>
+        </div>
         <div className='flex items-center gap-2'>
           <Button
             size={'sm'}
-            type='button'
             // Override link behavior if JS is enabled
-            onClick={() => {
+            onClick={(e) => {
+              e.preventDefault()
+
               if (
                 searchParams.getAll(searchTag).length === filters.data.length
               ) {
@@ -156,7 +166,7 @@ function ResourceFilterCategory({
             asChild
           >
             <Link
-              to={{ search: selectAllParams() }}
+              to={{ search: allParamLinkByTag() }}
               preventScrollReset
             >
               Select all
@@ -164,11 +174,16 @@ function ResourceFilterCategory({
           </Button>
           <Button
             variant={'outline'}
-            type='button'
             size={'sm'}
             aria-label={`Clear all ${searchTag} filter(s)`}
             // Override link behavior if JS is enabled
-            onClick={() => {
+            onClick={(e) => {
+              e.preventDefault()
+
+              if (!searchParams.has(searchTag)) {
+                return
+              }
+
               setSearchParams((searchParams) => {
                 searchParams.delete(searchTag)
                 return searchParams
@@ -177,7 +192,7 @@ function ResourceFilterCategory({
             asChild
           >
             <Link
-              to={'/resources'}
+              to={clearParamByTag()}
               preventScrollReset
             >
               Clear
@@ -194,7 +209,7 @@ function ResourceFilterCategory({
         {filters && filters.data.length > 0
           ? filters.data.map((filter) => {
               const searchParamName = filter.name
-              const resouceCount =
+              const resourceCount =
                 ((filter.related_resources &&
                   filter.related_resources.length) ||
                   (filter.credited_resources &&
@@ -215,7 +230,7 @@ function ResourceFilterCategory({
                   />
                   <Label
                     htmlFor={`checkbox-${searchParamName}`}
-                    aria-label={`${filter.name}, found ${resouceCount} resources with this ${searchTag}`}
+                    aria-label={`${filter.name}, found ${resourceCount} resources with this ${searchTag}`}
                   >
                     <Button
                       variant={'link'}
@@ -223,11 +238,13 @@ function ResourceFilterCategory({
                       asChild
                     >
                       <Link
-                        to={setParamLink(searchParamName)}
+                        to={paramLink(searchParamName)}
                         preventScrollReset
                         tabIndex={isClient ? -1 : 0}
                         // Override link behavior if JS is enabled
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.preventDefault()
+
                           if (!searchParams.has(searchTag, searchParamName)) {
                             setSearchParams((searchParams) => {
                               searchParams.append(searchTag, searchParamName)
@@ -241,7 +258,7 @@ function ResourceFilterCategory({
                           }
                         }}
                       >
-                        {`${searchParamName} (${resouceCount})`}
+                        {`${searchParamName} (${resourceCount})`}
                       </Link>
                     </Button>
                   </Label>
