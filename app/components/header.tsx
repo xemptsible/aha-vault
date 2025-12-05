@@ -10,9 +10,11 @@ export default function Header() {
     <header className='dark:bg-card container mx-auto flex items-center justify-between space-x-2 rounded-b-xl border-r border-b border-l px-3 py-2 shadow-sm'>
       <div className='flex w-full items-center justify-between'>
         <nav className='flex flex-wrap items-center gap-3'>
+          <h1 className='sr-only'>Atra-Hasis Vault - {pathname.slice(1)}</h1>
           <Button
             variant={'ba-ghost'}
             className={'bg-input/60 dark:bg-input/30'}
+            aria-current={pathname.match('/resources') ? 'page' : false}
             asChild
           >
             <Link to={'/'}>
@@ -22,6 +24,7 @@ export default function Header() {
           </Button>
           <Button
             variant={pathname.match('/resources') ? 'ba-main' : 'ba-ghost'}
+            aria-current={pathname.match('/resources') ? 'page' : false}
             asChild
           >
             <Link to={'/resources'}>
@@ -31,6 +34,7 @@ export default function Header() {
           </Button>
           <Button
             variant={pathname.match('/banner') ? 'ba-main' : 'ba-ghost'}
+            aria-current={pathname.match('/banner') ? 'page' : false}
             asChild
           >
             <Link to={'/banner'}>
@@ -42,6 +46,7 @@ export default function Header() {
             variant={
               pathname.match('/raid-score-calc') ? 'ba-main' : 'ba-ghost'
             }
+            aria-current={pathname.match('/raid-score-calc') ? 'page' : false}
             asChild
           >
             <Link to={'/raid-score-calc'}>

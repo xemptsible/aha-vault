@@ -6,19 +6,21 @@ export default function ResourceRoute() {
   const { resources, authors, tags } = useRouteLoaderData('resource-loader')
 
   return (
-    <div className='flex flex-col gap-4 lg:flex-row'>
+    <>
       <title>Resources</title>
       <meta
         name='description'
-        content='This app is the best'
+        content='For Blue Archive-related guides, resources and analyses'
       />
-      <ResourceFilter
-        authors={authors}
-        tags={tags}
-      />
-      <article className='grid flex-4/6 gap-3 md:grid-cols-2 lg:flex-5/6 xl:grid-cols-4'>
-        <ResourceView resolvedResources={resources} />
-      </article>
-    </div>
+      <div className='flex flex-col gap-4 lg:flex-row'>
+        <ResourceFilter
+          authors={authors}
+          tags={tags}
+        />
+        <article className='grid flex-4/6 gap-3 md:grid-cols-2 lg:flex-5/6 xl:grid-cols-4'>
+          <ResourceView resolvedResources={resources} />
+        </article>
+      </div>
+    </>
   )
 }

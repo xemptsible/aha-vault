@@ -28,7 +28,7 @@ export default function Home() {
               src='/resources.webp'
               height={125}
               width={125}
-              aria-hidden
+              alt=''
             />
             <span className='text-lg font-semibold'>Resources</span>
           </Link>
@@ -43,7 +43,7 @@ export default function Home() {
               src='/banner.webp'
               height={125}
               width={125}
-              aria-hidden
+              alt=''
             />
             <span className='text-lg font-semibold'>Banner</span>
           </Link>
@@ -58,7 +58,7 @@ export default function Home() {
               src='/calc.webp'
               height={125}
               width={125}
-              aria-hidden
+              alt=''
             />
             <span className='text-lg font-semibold'>Raid Score Calculator</span>
           </Link>
