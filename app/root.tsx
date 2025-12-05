@@ -13,6 +13,7 @@ import type { Route } from './+types/root'
 import './app.css'
 import { cn } from './lib/utils'
 import { themeSessionResolver } from './sessions.server'
+import { preconnect } from 'react-dom'
 
 export const links: Route.LinksFunction = () => []
 
@@ -38,6 +39,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 function ProviderLayout({ children }: { children: React.ReactNode }) {
+  preconnect('/aha-root.css')
   const data = useLoaderData<typeof loader>()
   const [theme] = useTheme()
 
@@ -71,7 +73,7 @@ export default function App() {
       <Outlet />
       <footer className='bg-card flex flex-col justify-between gap-1 border-t px-3 py-1 lg:flex-row'>
         <span className='text-center text-sm'>{'AYWKRCVB - NA'}</span>
-        <p className='text-center text-xs text-gray-400 lg:text-sm'>
+        <p className='text-center text-xs'>
           No affiliation nor endorsement from NEXON Games Co., Ltd. or Yostar,
           Inc.
         </p>
