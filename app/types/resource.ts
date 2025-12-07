@@ -8,7 +8,3 @@ export interface Resource {
   image: { name: string; url: string; alt_text: string } | null
 }
 
-export interface Resources {
-  data: Array<Resource>
-  count: number
-}

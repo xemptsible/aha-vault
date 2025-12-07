@@ -5,8 +5,3 @@ export interface Tag {
   name: string
   related_resources: Array<Resource>
 }
-
-export interface Tags {
-  data: Array<Tag>
-  count: number
-}

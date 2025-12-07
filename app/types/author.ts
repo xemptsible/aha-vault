@@ -7,7 +7,3 @@ export interface Author {
   credited_resources: Array<Resource>
 }
 
-export interface Authors {
-  data: Array<Author>
-  count: number
-}

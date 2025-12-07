@@ -3,25 +3,24 @@ import { useIsClient } from 'usehooks-ts'
 import { Button } from '~/components/ui/button'
 import { Label } from '~/components/ui/label'
 import { cn } from '~/lib/utils'
-import type { Authors } from '~/types/author'
-import type { Resource } from '~/types/resource'
-import type { Tags } from '~/types/tag'
+import type { ApiGetAll } from '~/types/_generic'
+import type { Author } from '~/types/author'
+import type { Tag } from '~/types/tag'
 import FilterCheckbox from './filter-checkbox'
 
 interface ResourceFilterProps {
-  authors: Authors
-  tags: Tags
+  authors: ApiGetAll<Author>
+  tags: ApiGetAll<Tag>
+}
+
+interface FilterDataProps extends Partial<Author>, Partial<Tag> {
+  id: number
+  name: string
 }
 
 interface ResourceFilterCategoryProps {
   filters: {
-    data: {
-      id: number
-      name: string
-      personal_site?: string
-      related_resources?: Array<Resource> // Tags only
-      credited_resources?: Array<Resource> // Authors only
-    }[]
+    data: Array<FilterDataProps>
     count: number
   }
   filterTitle: string
@@ -206,7 +205,7 @@ function ResourceFilterCategory({
         aria-label={`List of filter option for resource-related ${searchTag}`}
       >
         {filters && filters.data.length > 0
-          ? filters.data.map((filter) => {
+          ? filters.data.map((filter: FilterDataProps) => {
               const searchParamName = filter.name
               const resourceCount =
                 ((filter.related_resources &&
