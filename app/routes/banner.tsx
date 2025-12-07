@@ -66,6 +66,7 @@ function BannerCharacter() {
           <div className='z-10 flex flex-wrap items-center gap-2'>
             <Tooltip
               tooltip={'Only available for the duration of this banner.'}
+              asChild
             >
               <Badge
                 variant={'ba-default'}
@@ -78,6 +79,7 @@ function BannerCharacter() {
               tooltip={
                 'Only available during the biannual Fes/Anniversary Banners.'
               }
+              asChild
             >
               <Badge
                 variant={'ba-default'}
@@ -92,10 +94,11 @@ function BannerCharacter() {
               tooltip={
                 'Only available for the duration of this banner in the form of daily free pulls.'
               }
+              asChild
             >
               <Badge
                 variant={'ba-default'}
-                className='bg-[#f3aed9] outline outline-gray-600 dark:bg-[#f9eaf6] dark:outline-0'
+                className='bg-[#f3aed9] dark:bg-[#f9eaf6] dark:outline-0'
               >
                 <div>
                   <span aria-hidden>{'\u2728'}</span> 100 Free Pulls
@@ -106,40 +109,48 @@ function BannerCharacter() {
         </div>
       </div>
       <div className='flex shrink-0 flex-col gap-3'>
-        <Button
-          size={'sm'}
-          variant={'outline'}
-          className='p-0 transition lg:size-9 dark:hover:[&_img]:invert-0'
+        <Tooltip
+          tooltip={'View on SchaleDB'}
           asChild
         >
-          <Link
-            to={'https://schaledb.com/home'}
-            target='_blank'
+          <Button
+            variant={'outline'}
+            className='p-0 transition lg:size-9 dark:hover:[&_img]:invert-0'
+            asChild
           >
-            <AhaSchaleDBIcon className='size-5 dark:invert' />
-            <span className='flex items-center gap-1 text-xs lg:sr-only'>
-              View on SchaleDB
-              <AhaExternalLinkIcon className='dark:invert' />
-            </span>
-          </Link>
-        </Button>
-        <Button
-          size={'sm'}
-          variant={'outline'}
-          className='p-0 transition lg:size-9 dark:hover:[&_img]:invert-0'
+            <Link
+              to={'https://schaledb.com/home'}
+              target='_blank'
+            >
+              <AhaSchaleDBIcon className='size-5 dark:invert' />
+              <span className='flex items-center gap-1 text-xs lg:sr-only'>
+                View on SchaleDB
+                <AhaExternalLinkIcon className='dark:invert' />
+              </span>
+            </Link>
+          </Button>
+        </Tooltip>
+        <Tooltip
+          tooltip={'View on Hina Loves Midokuni'}
           asChild
         >
-          <Link
-            to={'https://hina.loves.midokuni.com/'}
-            target='_blank'
+          <Button
+            variant={'outline'}
+            className='p-0 transition lg:size-9 dark:hover:[&_img]:invert-0'
+            asChild
           >
-            <AhaMidokuniIcon className='size-5 dark:brightness-125' />
-            <span className='flex items-center gap-1 text-xs lg:sr-only'>
-              View on Hina Loves Midokuni
-              <AhaExternalLinkIcon className='dark:invert' />
-            </span>
-          </Link>
-        </Button>
+            <Link
+              to={'https://hina.loves.midokuni.com/'}
+              target='_blank'
+            >
+              <AhaMidokuniIcon className='size-5 dark:brightness-125' />
+              <span className='flex items-center gap-1 text-xs lg:sr-only'>
+                View on Hina Loves Midokuni
+                <AhaExternalLinkIcon className='dark:invert' />
+              </span>
+            </Link>
+          </Button>
+        </Tooltip>
       </div>
     </li>
   )

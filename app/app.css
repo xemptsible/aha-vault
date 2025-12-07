@@ -224,6 +224,7 @@
     @apply bg-background text-foreground h-full;
   }
   html {
+    scrollbar-gutter: stable;
     @apply h-svh;
   }
 }
