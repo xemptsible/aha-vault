@@ -1,6 +1,6 @@
 import { useRouteLoaderData } from 'react-router'
 import ResourceFilter from '~/features/resources/components/filter'
-import ResourceView from '~/features/resources/components/resources'
+import ResourceView from '~/features/resources/components/view'
 
 export default function ResourceRoute() {
   const { resources, authors, tags } = useRouteLoaderData('resource-loader')

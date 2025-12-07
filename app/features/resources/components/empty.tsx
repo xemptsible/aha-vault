@@ -6,7 +6,7 @@ import {
   EmptyTitle,
 } from '~/components/ui/empty'
 
-export default function EmptyResources() {
+export default function EmptyResourceView() {
   return (
     <Empty className='col-span-full'>
       <EmptyHeader>

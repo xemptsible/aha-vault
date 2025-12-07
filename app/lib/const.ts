@@ -5,7 +5,7 @@ export const BA_STYLE = {
   color: 'bg-secondary',
 }
 
-export const db_url =
+export const DB_URL =
   process.env.NODE_ENV && process.env.NODE_ENV === 'production'
     ? import.meta.env.VITE_DB_URL
     : import.meta.env.VITE_DEV_DB_URL

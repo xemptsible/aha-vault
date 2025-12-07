@@ -5,7 +5,6 @@ interface FilterCheckboxProps {
   searchTag: string
   searchParams: URLSearchParams
   setSearchParams: SetURLSearchParams
-  isClient: boolean
 }
 
 export default function FilterCheckbox({

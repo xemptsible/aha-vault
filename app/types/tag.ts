@@ -1,4 +1,4 @@
-import type { Resource } from "./resource"
+import type { Resource } from './resource'
 
 export interface Tag {
   id: number

@@ -1,14 +1,15 @@
-import type { Resources } from '~/types/resource'
-import EmptyResources from './empty'
+import type { ApiGetAll } from '~/types/_generic'
+import type { Resource } from '~/types/resource'
 import ResourceCard from './card'
+import EmptyResourceView from './empty'
 
 export default function ResourceView({
   resolvedResources,
 }: {
-  resolvedResources: Resources
+  resolvedResources: ApiGetAll<Resource>
 }) {
   if (resolvedResources.count === 0) {
-    return <EmptyResources />
+    return <EmptyResourceView />
   }
 
   return resolvedResources.data.map((resource) => (

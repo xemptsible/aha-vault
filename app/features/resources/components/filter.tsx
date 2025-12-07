@@ -224,7 +224,6 @@ function ResourceFilterCategory({
                     searchTag={searchTag}
                     searchParams={searchParams}
                     setSearchParams={setSearchParams}
-                    isClient={isClient}
                   />
                   <Label
                     htmlFor={`checkbox-${searchParamName}`}
