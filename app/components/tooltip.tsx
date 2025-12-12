@@ -8,7 +8,7 @@ import {
   useInteractions,
   useTransitionStyles,
 } from '@floating-ui/react'
-import { flip, shift } from '@floating-ui/react-dom'
+import { flip, limitShift, shift } from '@floating-ui/react-dom'
 import { Slot } from '@radix-ui/react-slot'
 import { useEffect, useId, useState, type ReactNode } from 'react'
 import { useIsClient } from 'usehooks-ts'
@@ -41,11 +41,26 @@ export default function Tooltip({
     open: isOpen,
     onOpenChange: setIsOpen,
     placement: 'top',
-    middleware: [flip(), shift()],
+    whileElementsMounted(referenceEl, floatingEl, update) {
+      const cleanup = autoUpdate(referenceEl, floatingEl, update, {
+        layoutShift: false,
+      })
+      return cleanup
+    },
+    middleware: [
+      shift({
+        limiter: limitShift(),
+      }),
+      flip(),
+    ],
   })
 
   const { isMounted, styles } = useTransitionStyles(context, {
     duration: 100,
+    initial: {
+      scale: 0,
+      transform: 'scale(1)',
+    },
   })
 
   const hover = useHover(context, {
@@ -92,7 +107,6 @@ export default function Tooltip({
           },
           className,
         )}
-        tabIndex={0}
         aria-describedby={id}
         {...props}
         {...getReferenceProps()}
@@ -104,6 +118,7 @@ export default function Tooltip({
         ref={refs.setFloating}
         className={cn('z-10', {
           'flex items-end justify-center': !isClient,
+          'pointer-events-none': isClient && !isMounted,
         })}
         style={isClient ? floatingStyles : undefined}
         {...getFloatingProps()}
@@ -112,10 +127,7 @@ export default function Tooltip({
           id={id}
           role='tooltip'
           className={cn(
-            'dark:outline-input text-primary-foreground w-max max-w-[40ch] rounded-md bg-black p-1 text-center text-sm dark:outline',
-            {
-              hidden: isClient && !isMounted,
-            },
+            'dark:outline-input text-primary-foreground w-max max-w-[calc(100dvw-10px)] rounded-md bg-black p-1 text-center text-xs text-pretty md:max-w-[40ch] md:text-sm dark:outline',
           )}
           style={isClient ? { ...styles } : undefined}
         >

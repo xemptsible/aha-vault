@@ -231,7 +231,7 @@
 
 .tooltip + div[id='tooltip-content'] > *[role='tooltip'] {
   position: absolute;
-  opacity: 0;
+  scale: 0;
 }
 
 /* Disable tooltip hover effect if the tooltip is not being hovered over */
@@ -241,13 +241,13 @@
 
 .tooltip:hover + div[id='tooltip-content'] > *[role='tooltip'],
 .tooltip:focus-visible + div[id='tooltip-content'] > *[role='tooltip'] {
-  opacity: 1;
+  scale: 1;
 
   @apply transition delay-500 duration-100 motion-reduce:transition-none;
 }
 
 div[id='tooltip-content'] > *[role='tooltip']:hover {
-  opacity: 1;
+  scale: 1;
   pointer-events: auto;
 }
 
