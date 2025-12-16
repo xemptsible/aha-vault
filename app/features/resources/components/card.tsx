@@ -1,4 +1,6 @@
 import { Separator } from '@radix-ui/react-dropdown-menu'
+import dayjs from 'dayjs'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
 import { Link } from 'react-router'
 import { AhaExternalLinkIcon } from '~/components/icon'
 import { Badge } from '~/components/ui/badge'
@@ -6,6 +8,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
 import type { Resource } from '~/types/resource'
 
 export default function ResourceCard({ resource }: { resource: Resource }) {
+  dayjs.extend(customParseFormat)
+
   function getClickableImageLink() {
     const image = resource.image
 
@@ -24,7 +28,7 @@ export default function ResourceCard({ resource }: { resource: Resource }) {
   return (
     <Card className='h-min'>
       <CardHeader>
-        <CardTitle>
+        <CardTitle className='flex flex-col gap-0.5'>
           <Link
             className='flex items-center gap-1 underline underline-offset-2'
             target='_blank'
@@ -33,6 +37,12 @@ export default function ResourceCard({ resource }: { resource: Resource }) {
             {resource.title}
             <AhaExternalLinkIcon className='size-[14px] dark:invert' />
           </Link>
+          <span className='text-muted-foreground text-xs'>
+            Last checked:{' '}
+            <time dateTime={dayjs(resource.updated_at).toString()}>
+              {dayjs(resource.updated_at).format('MMM DD, YY')}
+            </time>
+          </span>
         </CardTitle>
         <div
           data-slot='card-name'

@@ -8,3 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 export function extractSearchParams(request: Request) {
   return new URL(request.url).searchParams.toString()
 }
+
+export function validateImageUrl(imageUrl: string) {
+  return URL.canParse(imageUrl)
+}

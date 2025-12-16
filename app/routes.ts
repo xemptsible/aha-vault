@@ -8,7 +8,9 @@ import {
 export default [
   index('routes/home.tsx'),
   layout('routes/_layout.tsx', [
-    route('banner', 'routes/banner.tsx'),
+    layout('routes/banner/_layout.tsx', { id: 'banner-loader' }, [
+      route('banner', 'routes/banner/main.tsx'),
+    ]),
     layout('routes/resource/_layout.tsx', { id: 'resource-loader' }, [
       route('resources', 'routes/resource/main.tsx'),
     ]),

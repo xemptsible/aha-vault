@@ -49,6 +49,7 @@ function ProviderLayout({ children }: { children: React.ReactNode }) {
       className={cn(theme ?? '')}
     >
       <head>
+        {/* <script src='https://unpkg.com/react-scan/dist/auto.global.js' /> */}
         <meta charSet='utf-8' />
         <meta
           name='viewport'

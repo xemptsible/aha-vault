@@ -11,7 +11,7 @@
     },
     "routeIdToServerBundleId": {
       "routes/home": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
-      "routes/banner": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/banner/main": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
       "routes/resource/main": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
       "routes/raid-score-calc": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
       "routes/action/set-theme": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0"
@@ -38,10 +38,16 @@
         "file": "app/routes/_layout.tsx",
         "config": {}
       },
-      "routes/banner": {
-        "id": "routes/banner",
+      "banner-loader": {
+        "id": "banner-loader",
         "parentId": "routes/_layout",
-        "file": "app/routes/banner.tsx",
+        "file": "app/routes/banner/_layout.tsx",
+        "config": {}
+      },
+      "routes/banner/main": {
+        "id": "routes/banner/main",
+        "parentId": "banner-loader",
+        "file": "app/routes/banner/main.tsx",
         "path": "banner",
         "config": {
           "runtime": "nodejs"
@@ -110,10 +116,15 @@
         "parentId": "root",
         "file": "routes/_layout.tsx"
       },
-      "routes/banner": {
-        "id": "routes/banner",
+      "banner-loader": {
+        "id": "banner-loader",
         "parentId": "routes/_layout",
-        "file": "routes/banner.tsx",
+        "file": "routes/banner/_layout.tsx"
+      },
+      "routes/banner/main": {
+        "id": "routes/banner/main",
+        "parentId": "banner-loader",
+        "file": "routes/banner/main.tsx",
         "path": "banner"
       },
       "resource-loader": {
@@ -161,8 +172,14 @@
             "file": "routes/_layout.tsx",
             "children": [
               {
-                "file": "routes/banner.tsx",
-                "path": "banner"
+                "file": "routes/banner/_layout.tsx",
+                "children": [
+                  {
+                    "file": "routes/banner/main.tsx",
+                    "path": "banner"
+                  }
+                ],
+                "id": "banner-loader"
               },
               {
                 "file": "routes/resource/_layout.tsx",
