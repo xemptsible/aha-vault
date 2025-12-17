@@ -25,13 +25,14 @@ interface TooltipProps {
 
 // Bad idea to try and re-invent the wheel on an inherently hard to make accessible element
 export default function Tooltip({
-  id = `tooltip-text-${useId()}`, // Use React's ID generator hook if no id was provided
+  id = `tooltip-text`, // Use React's ID generator hook if no id was provided
   tooltip,
   children,
   asChild,
   className,
   ...props
 }: TooltipProps & React.ComponentProps<typeof Button>) {
+  const tooltipId = id + `-${useId()}`
   const isClient = useIsClient()
   const [isOpen, setIsOpen] = useState(false)
 
@@ -107,7 +108,7 @@ export default function Tooltip({
           },
           className,
         )}
-        aria-describedby={id}
+        aria-describedby={tooltipId}
         {...props}
         {...getReferenceProps()}
       >
@@ -124,7 +125,7 @@ export default function Tooltip({
         {...getFloatingProps()}
       >
         <div
-          id={id}
+          id={tooltipId}
           role='tooltip'
           className={cn(
             'dark:outline-input text-primary-foreground w-max max-w-[calc(100dvw-10px)] rounded-md bg-black p-1 text-center text-xs text-pretty md:max-w-[40ch] md:text-sm dark:outline',
