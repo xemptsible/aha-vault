@@ -1,6 +1,4 @@
-import type { Image } from './_generic'
 import type { Character } from './character'
-
 
 export interface Banner {
   id: number
