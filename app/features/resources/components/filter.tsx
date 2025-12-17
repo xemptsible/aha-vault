@@ -198,7 +198,6 @@ function ResourceFilterCategory({
           </Button>
         </div>
       </div>
-
       <ul
         className='grid gap-2'
         id={`filter-${searchTag}`}

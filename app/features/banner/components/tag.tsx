@@ -24,9 +24,9 @@ export default function BannerTag({
       return {
         tooltip: (
           <p>
-            This student is a <strong>FEST</strong> unit. <br /> The rate of
-            obtaining a 3* student on this banner is doubled (6%) and there is a
-            small chance of obtaining other FEST students on this banner.
+            This student is a <strong>FES</strong> unit. The rate of obtaining a
+            3* student on this banner is doubled (6%) and there is a small
+            chance of obtaining other FES students on this banner.
           </p>
         ),
         className: 'bg-gradient-to-r from-purple-300 to-rose-300',
