@@ -1,15 +1,12 @@
 import { Separator } from '@radix-ui/react-dropdown-menu'
-import dayjs from 'dayjs'
-import customParseFormat from 'dayjs/plugin/customParseFormat'
 import { Link } from 'react-router'
 import { AhaExternalLinkIcon } from '~/components/icon'
 import { Badge } from '~/components/ui/badge'
+import { Button } from '~/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
 import type { Resource } from '~/types/resource'
 
 export default function ResourceCard({ resource }: { resource: Resource }) {
-  dayjs.extend(customParseFormat)
-
   function getClickableImageLink() {
     const image = resource.image
 
@@ -25,22 +22,51 @@ export default function ResourceCard({ resource }: { resource: Resource }) {
     return resource.image?.url ?? ''
   }
 
+  function getUnicodeFlag(tag: string) {
+    if (tag === 'EN') {
+      return <span>🌐</span>
+    }
+    if (tag === 'JP') {
+      return <span>🇯🇵</span>
+    }
+    if (tag === 'KR') {
+      return <span>🇰🇷</span>
+    }
+    if (tag === 'CN') {
+      return <span>🇨🇳</span>
+    }
+
+    return null
+  }
+
   return (
     <Card className='h-min'>
       <CardHeader>
         <CardTitle className='flex flex-col gap-0.5'>
-          <Link
-            className='flex items-center gap-1 underline underline-offset-2'
-            target='_blank'
-            to={resource.url}
+          <Button
+            variant={'link'}
+            className='size-fit p-0 text-base font-semibold'
+            asChild
           >
-            {resource.title}
-            <AhaExternalLinkIcon className='size-[14px] dark:invert' />
-          </Link>
+            <Link
+              className='flex w-fit items-center gap-1'
+              target='_blank'
+              to={resource.url}
+            >
+              {resource.title}
+              <AhaExternalLinkIcon className='size-[14px] dark:invert' />
+            </Link>
+          </Button>
           <span className='text-muted-foreground text-xs'>
             Last checked:{' '}
-            <time dateTime={dayjs(resource.updated_at).toString()}>
-              {dayjs(resource.updated_at).format('MMM DD, YY')}
+            <time
+              dateTime={new Intl.DateTimeFormat(undefined, {
+                dateStyle: 'long',
+              }).format(new Date(resource.updated_at))}
+            >
+              {new Intl.DateTimeFormat(undefined, {
+                dateStyle: 'medium',
+              }).format(new Date(resource.updated_at))}
             </time>
           </span>
         </CardTitle>
@@ -108,22 +134,24 @@ export default function ResourceCard({ resource }: { resource: Resource }) {
         >
           {resource.tags && resource.tags?.length > 0 ? (
             resource.tags.map((tag) => {
-              return <Badge key={tag.id}>{tag.name}</Badge>
+              return (
+                <Badge key={tag.id}>
+                  {getUnicodeFlag(tag.name)} {tag.name}
+                </Badge>
+              )
             })
           ) : (
-            <span className='text-muted-foreground text-xs'>
-              No tag(s) provided
+            <span className='text-muted-foreground text-sm'>
+              No tag(s) provided.
             </span>
           )}
         </div>
       </CardHeader>
-      <CardContent>
-        {resource.description && resource.description.length > 0 ? (
+      {resource.description && resource.description.length > 0 ? (
+        <CardContent>
           <p>{resource.description}</p>
-        ) : (
-          <p>No description provided.</p>
-        )}
-      </CardContent>
+        </CardContent>
+      ) : null}
     </Card>
   )
 }
