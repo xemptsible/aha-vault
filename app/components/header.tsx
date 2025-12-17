@@ -1,4 +1,4 @@
-import { BookMarked, Calculator, CalendarSync, Home } from 'lucide-react'
+import { BookMarked, CalendarSync, Home } from 'lucide-react'
 import { Link, useLocation } from 'react-router'
 import { ThemeToggle } from './theme-toggle'
 import { Button } from './ui/button'
@@ -40,18 +40,6 @@ export default function Header() {
             <Link to={'/banner'}>
               <CalendarSync />
               <span className='hidden md:inline'>Banner</span>
-            </Link>
-          </Button>
-          <Button
-            variant={
-              pathname.match('/raid-score-calc') ? 'ba-main' : 'ba-ghost'
-            }
-            aria-current={pathname.match('/raid-score-calc') ? 'page' : false}
-            asChild
-          >
-            <Link to={'/raid-score-calc'}>
-              <Calculator />
-              <span className='hidden md:inline'>Raid Score Calculator</span>
             </Link>
           </Button>
         </nav>

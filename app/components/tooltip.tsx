@@ -129,7 +129,7 @@ export default function Tooltip({
           id={tooltipId}
           role='tooltip'
           className={cn(
-            'dark:outline-input text-primary-foreground w-max max-w-[calc(100dvw-10px)] rounded-md bg-black p-1 text-center text-xs text-pretty md:max-w-[40ch] md:text-sm dark:outline',
+            'dark:outline-input text-primary-foreground w-max max-w-[calc(100svw-25px)] rounded-md bg-black p-1 text-center text-xs text-pretty sm:max-w-[50ch] sm:text-sm dark:outline',
           )}
           style={isClient ? { ...styles } : undefined}
         >

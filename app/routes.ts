@@ -14,7 +14,6 @@ export default [
     layout('routes/resource/_layout.tsx', { id: 'resource-loader' }, [
       route('resources', 'routes/resource/main.tsx'),
     ]),
-    route('raid-score-calc', 'routes/raid-score-calc.tsx'),
   ]),
 
   // https://github.com/abereghici/remix-themes/tree/main#add-the-action-route
