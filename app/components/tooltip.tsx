@@ -109,6 +109,7 @@ export default function Tooltip({
           className,
         )}
         aria-describedby={tooltipId}
+        tabIndex={0}
         {...props}
         {...getReferenceProps()}
       >
